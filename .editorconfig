@@ -1,0 +1,230 @@
+# .editorconfig
+# This file is used to define coding styles and maintain consistency
+# across different editors and IDEs for a project.
+# For more information, visit: https://editorconfig.org
+
+root = true
+
+# Global settings applicable to all files
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# Markdown and documentation files
+[*.md,*.mdx]
+trim_trailing_whitespace = false
+
+# YAML and JSON files
+[*.{yml,yaml,json,jsonc}]
+indent_size = 2
+
+# HTML and templating files
+[*.html,*.jinja,*.njk,*.astro]
+indent_size = 2
+
+# CSS and preprocessors
+[*.css,*.scss,*.sass,*.less]
+indent_size = 2
+
+# JavaScript and TypeScript
+[*.{js,jsx,ts,tsx,cjs,mjs}]
+indent_size = 2
+
+# Python
+[*.py]
+indent_size = 4
+
+# Jupyter Notebook files
+[*.ipynb]
+indent_size = 4
+
+# Shell scripts
+[*.sh,*.bash,*.zsh,*.fish,*.csh]
+indent_size = 4
+
+# Makefiles (must use tabs)
+[Makefile]
+indent_style = tab
+
+# C, C++, Objective-C
+[*.{c,cpp,h,hpp,hxx,m,mm}]
+indent_size = 4
+
+# Java and Kotlin
+[*.{java,kt,kts}]
+indent_size = 4
+
+# Ruby
+[*.rb, Gemfile, Gemfile.lock, spec/**/*.rb]
+indent_size = 2
+
+# Swift
+[*.swift, Package.swift]
+indent_size = 4
+
+# Go (must use tabs)
+[*.go]
+indent_style = tab
+
+# PHP
+[*.php]
+indent_size = 4
+
+# Rust
+[*.rs]
+indent_size = 4
+
+# Terraform
+[*.tf]
+indent_size = 2
+
+# Docker
+[Dockerfile, docker-compose.yml]
+indent_size = 2
+
+# Kubernetes
+[*.k8s.yml,*.kube.yml]
+indent_size = 2
+
+# Open Policy Agent (OPA)
+[*.rego]
+indent_size = 2
+
+# Protobuf
+[*.proto]
+indent_size = 2
+
+# Haskell
+[*.hs]
+indent_size = 2
+
+# Lua
+[*.lua]
+indent_size = 2
+
+# Perl
+[*.pl]
+indent_size = 4
+
+# CMake
+[CMakeLists.txt]
+indent_size = 2
+
+# LaTeX
+[*.tex]
+indent_size = 2
+
+# Julia
+[*.jl]
+indent_size = 4
+
+# CoffeeScript
+[*.coffee]
+indent_size = 2
+
+# F#
+[*.fs,*.fsi,*.fsx]
+indent_size = 4
+
+# HCL
+[*.hcl]
+indent_size = 2
+
+# Apache and Nginx config
+[*.conf,nginx.conf,*.nginx]
+indent_size = 2
+
+# Caddyfile
+[Caddyfile]
+indent_size = 4
+
+# Vagrantfile
+[Vagrantfile]
+indent_size = 2
+
+# ASP.NET Razor files
+[*.cshtml]
+indent_size = 2
+
+# Vue.js files
+[*.vue]
+indent_size = 2
+
+# JavaScript configuration files
+[*.{eslintrc,prettierrc,babelrc}]
+indent_size = 2
+
+# Handlebars
+[*.hbs]
+indent_size = 2
+
+# CI/CD configuration files
+[*.{travis.yml,appveyor.yml,azure-pipelines.yml,*.github/workflows/*}]
+indent_size = 2
+
+# Jenkinsfile
+[Jenkinsfile]
+indent_size = 4
+
+# Groovy
+[*.groovy]
+indent_size = 4
+
+# Puppet
+[*.pp]
+indent_size = 2
+
+# ClangFormat configuration
+[.clang-format]
+indent_size = 2
+
+# Bazel
+[BUILD,*.bzl]
+indent_size = 2
+
+# Visual Studio solution and project files
+[*.sln]
+indent_size = 4
+[*.csproj,*.vbproj,*.fsproj]
+indent_size = 2
+
+# Properties files
+[*.properties]
+indent_size = 2
+
+# SQL
+[*.sql]
+indent_size = 4
+
+# MATLAB
+[*.m]
+indent_size = 4
+
+# Rake
+[Rakefile]
+indent_size = 2
+
+# Rust Cargo
+[Cargo.toml]
+indent_size = 2
+
+# Gherkin feature files
+[*.feature]
+indent_size = 2
+
+# Log files (do not enforce newlines)
+[*.log]
+insert_final_newline = false
+
+# Python config files
+[tox.ini,pytest.ini,setup.cfg]
+indent_size = 4
+
+# Ignore external code and minified bundles
+[{**/{external,vendor}/**,**.min.{js,css}}]
+indent_style = ignore
+indent_size = ignore
