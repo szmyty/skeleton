@@ -12,7 +12,8 @@ It reduces **unnecessary issue reports** and **improves community engagement**.
 
 ## **🛠 Key Features**
 ### **1️⃣ Provides Clear Support Channels**  
-Lists **where to ask for help**, including issues, discussions, and external communities.    
+Lists **where to ask for help**, including issues, discussions, and external communities. 
+
 | Issue Type                 | Where to Ask for Help                                      |
 |----------------------------|-----------------------------------------------------------|
 | 🐛 **Bug Reports**          | [GitHub Issues](https://github.com/example/issues/new)  |
@@ -23,28 +24,28 @@ Lists **where to ask for help**, including issues, discussions, and external com
 
 ### **2️⃣ Encourages Self-Help Before Asking**  
 Suggests **checking documentation and existing issues first**.  
-```  
+
 1️⃣ **Check the [Documentation](https://example.com/docs)** – Your answer may already be there!  
 2️⃣ **Search [GitHub Issues](https://github.com/example/issues?q=is%3Aissue)** – Someone else may have encountered the same problem.  
 3️⃣ **Try Debugging** – Providing error logs and detailed steps improves response time.  
-```  
+
 
 ### **3️⃣ Helps Users Ask Better Questions**  
 Guides users on **how to ask for help effectively** (clear details, logs, screenshots).  
-``` 
+
 ✔ **Provide clear details** (What are you trying to do? What did you expect? What happened instead?)  
 ✔ **Include error messages, logs, and screenshots**.  
 ✔ **List any troubleshooting steps you've already tried**.  
 ✔ **Use a minimal reproducible example** (CodeSandbox, JSFiddle, or Gist).  
-``` 
+
 
 ### **4️⃣ Supports Open-Source Community Growth**  
 Encourages **contributing to support efforts** by helping others and improving documentation.  
-```  
+
 ✔ **Answer community questions** in [GitHub Discussions](https://github.com/example/discussions).  
 ✔ **Improve documentation** by submitting PRs to [docs/](https://github.com/example/docs).  
 ✔ **Share tutorials and guides** to help others.  
-```
+
 
 ---
 
