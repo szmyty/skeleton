@@ -12,8 +12,7 @@ It reduces **unnecessary issue reports** and **improves community engagement**.
 
 ## **🛠 Key Features**
 ### **1️⃣ Provides Clear Support Channels**  
-Lists **where to ask for help**, including issues, discussions, and external communities.  
-```  
+Lists **where to ask for help**, including issues, discussions, and external communities.    
 | Issue Type                 | Where to Ask for Help                                      |
 |----------------------------|-----------------------------------------------------------|
 | 🐛 **Bug Reports**          | [GitHub Issues](https://github.com/example/issues/new)  |
@@ -21,7 +20,6 @@ Lists **where to ask for help**, including issues, discussions, and external com
 | 📖 **Documentation Help**   | [Project Docs](https://example.com/docs) |
 | 🛠 **Technical Questions**  | [GitHub Discussions](https://github.com/example/discussions) |
 | 🚀 **Community Support**    | [Discord/Slack Chat](https://discord.com/invite/example) |
-```  
 
 ### **2️⃣ Encourages Self-Help Before Asking**  
 Suggests **checking documentation and existing issues first**.  
