@@ -6,6 +6,5 @@
     },
     "editor.formatOnSave": true,
     // Ensure VSCode uses pnpm instead of npm
-    "eslint.packageManager": "pnpm",
     "npm.packageManager": "pnpm",
 }

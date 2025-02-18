@@ -1,14 +1,22 @@
 {
-  "name": "Development Container",
+  "name": "Dev Container",
   "dockerComposeFile": "docker-compose.yml",
-  "service": "dev",
+  "service": "devcontainer",
   "workspaceFolder": "/workspace",
-  "settings": {
-    "terminal.integrated.defaultProfile.linux": "bash"
-  },
-  "extensions": [
-    "ms-vscode-remote.remote-containers",
-    "EditorConfig.EditorConfig"
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
   ],
-  "postCreateCommand": "task --version"
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+      },
+    "vscode": {
+      "extensions": [
+        "editorconfig.editorconfig",
+        "ms-azuretools.vscode-docker",
+        "golang.go"
+      ]
+    }
+  }
 }
