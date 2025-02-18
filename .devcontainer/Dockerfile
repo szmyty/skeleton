@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
     unzip \
     tar \
     build-essential \
-    && apt-get clean
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Taskfile
