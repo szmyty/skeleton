@@ -1,0 +1,14 @@
+{
+  "name": "Development Container",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/workspace",
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash"
+  },
+  "extensions": [
+    "ms-vscode-remote.remote-containers",
+    "EditorConfig.EditorConfig"
+  ],
+  "postCreateCommand": "task --version"
+}
