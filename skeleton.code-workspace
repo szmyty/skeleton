@@ -3,5 +3,13 @@
         {
             "path": "."
         }
-    ]
+    ],
+    "settings": {
+        "cSpell.words": [
+            "devcontainers",
+            "noninteractive",
+            "PULUMI",
+            "Taskfile"
+        ]
+    }
 }
