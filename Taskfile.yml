@@ -54,8 +54,6 @@ tasks:
       - kubectl version --client
 
   deploy-cluster:
-    desc: "Deploys a local Kubernetes cluster"
+    desc: "Deploy Kubernetes cluster using Pulumi"
     cmds:
-      - echo "🚀 Starting Minikube..."
-      - minikube start
-      - echo "✅ Kubernetes cluster is running!"
+      - cd infrastructure && pulumi up
