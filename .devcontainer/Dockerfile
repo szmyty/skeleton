@@ -29,6 +29,12 @@ WORKDIR /workspace
 # Copy Taskfile into the container
 COPY Taskfile.yml /workspace/Taskfile.yml
 
+# Copy scripts directory into the container
+COPY scripts/ /workspace/scripts/
+
+# Ensure scripts are executable
+RUN chmod +x /workspace/scripts/*
+
 # Run Taskfile setup during build
 RUN task setup
 
