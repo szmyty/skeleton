@@ -1,0 +1,10 @@
+config:
+  pulumi:tags:
+    value:
+      project: "skeleton"
+      env: "development"
+  kubernetes:context: minikube
+  kubernetes:proxy:
+    http_proxy: ""
+    https_proxy: ""
+    no_proxy: "localhost,127.0.0.1"
