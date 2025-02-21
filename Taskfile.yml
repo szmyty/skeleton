@@ -16,44 +16,51 @@ tasks:
   setup:
     desc: "Installs required dependencies (Pulumi, Kubernetes CLI, etc.)"
     cmds:
+      - task: install:asdf
+      - task: install:pnpm
       - task: install:pulumi
+      - task: login:pulumi
+      - task: install:pulumi-packages
+      - task: install:kubernetes
     silent: false
 
   install:pulumi:
     desc: "Installs Pulumi CLI"
     cmds:
-      - |
-        if ! command -v pulumi &> /dev/null; then
-          echo "Installing Pulumi..."
-          curl --fail --silent --show-error --location https://get.pulumi.com | sh -s -- --install-root "${PULUMI_HOME}" --no-edit-path
-        else
-          echo "✅ Pulumi is already installed."
-        fi
-      - pulumi version
+      - bash ./scripts/install_pulumi.sh
+
+  install:pulumi-packages:
+    desc: "Installs Pulumi dependencies"
+    cmds:
+      - cd infrastructure && pnpm install --frozen-lockfile
 
   install:kubernetes:
     desc: "Installs Minikube & kubectl"
     cmds:
-      - |
-        if ! command -v minikube &> /dev/null; then
-          echo "Installing Minikube..."
-          curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-          sudo install minikube-linux-amd64 /usr/local/bin/minikube
-        else
-          echo "✅ Minikube is already installed."
-        fi
-      - minikube version
-      - |
-        if ! command -v kubectl &> /dev/null; then
-          echo "Installing kubectl..."
-          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-          sudo install kubectl /usr/local/bin/kubectl
-        else
-          echo "✅ kubectl is already installed."
-        fi
-      - kubectl version --client
+      - bash ./scripts/install_kubernetes.sh
+
+  install:asdf:
+    desc: "Installs asdf version manager"
+    cmds:
+      - bash ./scripts/install_asdf.sh
+
+  install:pnpm:
+    desc: "Installs pnpm package manager"
+    cmds:
+      - bash ./scripts/install_pnpm.sh
+
+  login:pulumi:
+    desc: "Logs into Pulumi using local backend"
+    cmds:
+      - pulumi login --local
+
+  init:pulumi-stack:
+    desc: "Ensures the Pulumi stack exists before deployment"
+    cmds:
+      - cd infrastructure && pulumi stack select dev || pulumi stack init dev
 
   deploy-cluster:
-    desc: "Deploy Kubernetes cluster using Pulumi"
+    desc: "Deploys the Kubernetes cluster with Pulumi"
+    deps: [init:pulumi-stack]
     cmds:
-      - cd infrastructure && pulumi up
+      - cd infrastructure && pulumi up --yes

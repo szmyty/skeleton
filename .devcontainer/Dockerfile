@@ -10,6 +10,12 @@ ENV PULUMI_HOME=/home/vscode/.pulumi
 # Add Pulumi to the PATH
 ENV PATH="${PULUMI_HOME}/bin:${PATH}"
 
+# Set global environment variables for asdf
+ENV ASDF_DIR="/usr/local/asdf"
+
+# Add asdf to the PATH
+ENV PATH="${ASDF_DIR}/bin:${PATH}"
+
 # Install required dependencies
 RUN apt-get update && apt-get install --yes --no-install-recommends \
     curl \
@@ -17,6 +23,10 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
     unzip \
     tar \
     build-essential \
+    python3 \
+    python3-pip \
+    python3-venv \
+    jq \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -34,6 +44,12 @@ COPY scripts/ /workspace/scripts/
 
 # Ensure scripts are executable
 RUN chmod +x /workspace/scripts/*
+
+# Copy global Git configuration
+COPY .gitconfig /etc/gitconfig
+
+# Copy ASDF tool versions for consistent dependency management
+COPY .tool-versions /workspace/.tool-versions
 
 # Run Taskfile setup during build
 RUN task setup
