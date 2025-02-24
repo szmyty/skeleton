@@ -17,7 +17,8 @@ tasks:
     desc: "Installs required dependencies (Pulumi, Kubernetes CLI, etc.)"
     cmds:
       - task: install:asdf
-      # - task: install:pnpm
+      - task: install:node
+      - task: install:pnpm
       # - task: install:pulumi
       # - task: login:pulumi
       # - task: install:pulumi-packages
@@ -43,6 +44,11 @@ tasks:
     desc: "Installs asdf version manager"
     cmds:
       - bash ./scripts/install_asdf.sh
+
+  install:node:
+    desc: "Installs nodejs"
+    cmds:
+      - bash ./scripts/install_node.sh
 
   install:pnpm:
     desc: "Installs pnpm package manager"

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-set -e
-set -o pipefail
+set -euo pipefail  # Exit on error, undefined variables, or failed pipes
 
 echo "🔧 Installing pnpm via asdf..."
 
@@ -10,17 +9,22 @@ if ! command -v asdf &> /dev/null; then
     exit 1
 fi
 
-# Ensure pnpm is installed via asdf
-if asdf list pnpm &>/dev/null; then
-    echo "✅ pnpm is already installed via asdf."
-else
-    echo "📥 Installing pnpm..."
-    asdf plugin add pnpm || true
-    asdf install pnpm latest
-    asdf global pnpm latest
-    echo "✅ pnpm installation complete."
+# Add pnpm plugin if not already installed
+if ! asdf plugin list | grep -q "^pnpm$"; then
+    echo "📥 Adding asdf pnpm plugin..."
+    asdf plugin add pnpm
 fi
 
+# Install pnpm from .tool-versions (removes the need for "latest")
+echo "📦 Installing pnpm (version from .tool-versions)..."
+asdf install pnpm
+
+# Set global version from .tool-versions
+asdf global pnpm "$(asdf latest pnpm)"
+
+# Ensure `asdf` shims are in PATH
+echo "🛠 Updating PATH for asdf shims..."
+export PATH="$HOME/.asdf/shims:$PATH"
+
 # Verify installation
-pnpm --version
-echo "✅ pnpm setup finished."
+echo "✅ pnpm installed successfully: $(pnpm --version)"

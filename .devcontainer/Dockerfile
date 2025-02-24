@@ -11,10 +11,12 @@ ENV PULUMI_HOME=/home/vscode/.pulumi
 ENV PATH="${PULUMI_HOME}/bin:${PATH}"
 
 # Set global environment variables for asdf
+ENV ASDF_DATA_DIR=/home/vscode/.asdf
 ENV ASDF_DIR="/usr/local/asdf"
+ENV ASDF_SHIMS_DIR="${ASDF_DATA_DIR}/shims"
 
 # Add asdf to the PATH
-ENV PATH="${ASDF_DIR}/bin:${PATH}"
+ENV PATH="${ASDF_DIR}/bin:${ASDF_SHIMS_DIR}:${PATH}"
 
 # Install required dependencies
 RUN apt-get update && apt-get install --yes --no-install-recommends \
