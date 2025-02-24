@@ -17,11 +17,11 @@ tasks:
     desc: "Installs required dependencies (Pulumi, Kubernetes CLI, etc.)"
     cmds:
       - task: install:asdf
-      - task: install:pnpm
-      - task: install:pulumi
-      - task: login:pulumi
-      - task: install:pulumi-packages
-      - task: install:kubernetes
+      # - task: install:pnpm
+      # - task: install:pulumi
+      # - task: login:pulumi
+      # - task: install:pulumi-packages
+      # - task: install:kubernetes
     silent: false
 
   install:pulumi:
