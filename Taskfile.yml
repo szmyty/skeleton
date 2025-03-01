@@ -7,7 +7,8 @@
 #
 # Usage:
 #   - task setup        # Installs dependencies
-#   - task deploy-cluster # Starts a local Kubernetes cluster
+#   - task deploy       # Starts a local Kubernetes cluster
+#   - task port-forward # Forwards Caddy & Dashboard to localhost
 # ------------------------------------------------------------
 
 version: '3'
@@ -19,21 +20,16 @@ tasks:
       - task: install:asdf
       - task: install:node
       - task: install:pnpm
-      # - task: install:pulumi
-      # - task: login:pulumi
-      # - task: install:pulumi-packages
-      # - task: install:kubernetes
+      - task: install:pulumi
+      - task: login:pulumi
+      - task: install:pulumi-packages
+      - task: install:kubernetes
     silent: false
 
   install:pulumi:
     desc: "Installs Pulumi CLI"
     cmds:
       - bash ./scripts/install_pulumi.sh
-
-  install:pulumi-packages:
-    desc: "Installs Pulumi dependencies"
-    cmds:
-      - cd infrastructure && pnpm install --frozen-lockfile
 
   install:kubernetes:
     desc: "Installs Minikube & kubectl"
@@ -60,13 +56,44 @@ tasks:
     cmds:
       - pulumi login --local
 
+  install:pulumi-packages:
+    desc: "Installs Pulumi dependencies"
+    cmds:
+      - cd infrastructure && pnpm approve-builds
+      - cd infrastructure && pnpm install --frozen-lockfile --verbose || true
+
   init:pulumi-stack:
     desc: "Ensures the Pulumi stack exists before deployment"
     cmds:
       - cd infrastructure && pulumi stack select dev || pulumi stack init dev
+    env:
+      PULUMI_CONFIG_PASSPHRASE: ""
 
   deploy-cluster:
     desc: "Deploys the Kubernetes cluster with Pulumi"
     deps: [init:pulumi-stack]
     cmds:
+      - echo "🚀 Starting Minikube..."
+      - minikube delete || true  # Ensures a clean slate
+      - minikube start --kubernetes-version="v1.32.2" --driver=docker --preload=true --no-kubernetes=false --nodes=1 --interactive=false
+      - minikube update-context
+      - echo "✅ Minikube is running and context is updated."
       - cd infrastructure && pulumi up --yes
+    env:
+      PULUMI_CONFIG_PASSPHRASE: ""
+
+  port-forward:
+    desc: "Forwards Caddy & Dashboard ports from Minikube to localhost"
+    cmds:
+      - echo "🔄 Forwarding Caddy service (http://localhost:30080)..."
+      - kubectl port-forward -n app-namespace service/caddy-service 30080:30080 > /dev/null 2>&1 &
+      - echo "🔄 Forwarding Kubernetes Dashboard (http://localhost:30081)..."
+      - kubectl port-forward -n app-namespace service/dashboard-service 30081:30081 > /dev/null 2>&1 &
+
+  deploy:
+    desc: "Deploys the Kubernetes cluster with Pulumi & forwards ports"
+    cmds:
+      - task: init:pulumi-stack
+      - task: port-forward
+      - task: deploy-cluster
+    silent: false

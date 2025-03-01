@@ -1,3 +1,5 @@
 name: skeleton
 runtime: nodejs
 description: Kubernetes deployment using Pulumi
+config:
+  kubernetes:version: "1.32.2"

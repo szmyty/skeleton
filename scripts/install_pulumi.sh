@@ -1,15 +1,28 @@
-#!/bin/bash
-set -e  # Exit on any error
+#!/usr/bin/env bash
+# install_pulumi.sh - Installs Pulumi if not already installed.
+# Author: Alan Szmyt
 
-PULUMI_HOME="${PULUMI_HOME:-$HOME/.pulumi}"
+set -euo pipefail
 
-# Check if Pulumi is already installed
-if ! command -v pulumi &> /dev/null; then
-    echo "Installing Pulumi..."
-    curl --fail --silent --show-error --location https://get.pulumi.com | sh -s -- --install-root "${PULUMI_HOME}" --no-edit-path
-else
-    echo "✅ Pulumi is already installed."
-fi
+PULUMI_HOME="${PULUMI_HOME:-${HOME}/.pulumi}"
 
-# Print version to verify installation
-pulumi version
+install_pulumi() {
+    if ! command -v pulumi &> /dev/null; then
+        printf "Installing Pulumi...\n"
+        curl --fail --silent --show-error --location https://get.pulumi.com | sh -s -- --install-root "${PULUMI_HOME}" --no-edit-path
+    else
+        printf "✅ Pulumi is already installed.\n"
+    fi
+}
+
+verify_installation() {
+    pulumi version
+}
+
+main() {
+    trap 'printf "❌ An error occurred during execution.\n"' ERR
+    install_pulumi
+    verify_installation
+}
+
+main "$@"

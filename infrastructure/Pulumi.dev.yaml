@@ -7,4 +7,9 @@ config:
   kubernetes:proxy:
     http_proxy: ""
     https_proxy: ""
-    no_proxy: "localhost,127.0.0.1"
+    no_proxy: "localhost,127.0.0.1,0.0.0.0"
+    HTTP_PROXY: ""
+    HTTPS_PROXY: ""
+    NO_PROXY: "localhost,127.0.0.1,0.0.0.0"
+  kubernetes:version: "1.32.2"
+encryptionsalt: v1:5tThnoKBWwM=:v1:mTqoWsI2bOwcyxVB:At60bJoSz7c2MRkBr9ZQ58qhSD4gNA==

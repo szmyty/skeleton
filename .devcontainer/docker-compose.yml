@@ -5,4 +5,9 @@ services:
       dockerfile: .devcontainer/Dockerfile
     volumes:
       - ..:/workspace
-    command: sleep infinity
+    # command: sleep infinity
+    environment:
+      - PULUMI_CONFIG_PASSPHRASE=
+    ports:
+      - "30080:30080"
+      - "30081:30081"

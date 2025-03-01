@@ -3,11 +3,24 @@
   "dockerComposeFile": "docker-compose.yml",
   "service": "devcontainer",
   "workspaceFolder": "/workspace",
+  "forwardPorts": [
+    30080,
+    30081
+  ],
   "mounts": [
     "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
   ],
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "27.5",
+      "moby": true,
+      "mobyBuildxVersion": "latest",
+      "dockerDashComposeVersion": "latest",
+      "azureDnsAutoDetection": true,
+      "installDockerBuildx": true,
+      "installDockerComposeSwitch": true,
+      "disableIp6tables": false
+    }
   },
   "customizations": {
     "vscode": {

@@ -10,6 +10,7 @@
             "noninteractive",
             "PULUMI",
             "Taskfile"
-        ]
+        ],
+        "git.ignoreLimitWarning": true
     }
 }

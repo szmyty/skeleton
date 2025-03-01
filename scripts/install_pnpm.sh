@@ -22,9 +22,5 @@ asdf install pnpm
 # Set global version from .tool-versions
 asdf global pnpm "$(asdf latest pnpm)"
 
-# Ensure `asdf` shims are in PATH
-echo "🛠 Updating PATH for asdf shims..."
-export PATH="$HOME/.asdf/shims:$PATH"
-
 # Verify installation
 echo "✅ pnpm installed successfully: $(pnpm --version)"

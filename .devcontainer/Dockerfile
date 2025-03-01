@@ -53,8 +53,19 @@ COPY .gitconfig /etc/gitconfig
 # Copy ASDF tool versions for consistent dependency management
 COPY .tool-versions /workspace/.tool-versions
 
+# Copy infrastructure directory
+COPY infrastructure/ /workspace/infrastructure/
+
 # Run Taskfile setup during build
 RUN task setup
+
+# Ensure Pulumi directory exists & is owned by the vscode user
+RUN mkdir -p /home/vscode/.pulumi && chown --recursive vscode:vscode /home/vscode/.pulumi
+
+EXPOSE 30080 30081
+
+# Set the entrypoint
+# ENTRYPOINT ["/workspace/scripts/entrypoint.sh"]
 
 # Ensure the container stays running
 CMD ["sleep", "infinity"]
