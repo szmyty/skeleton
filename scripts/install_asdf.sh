@@ -1,52 +1,71 @@
 #!/usr/bin/env bash
+# install_asdf.sh - Installs asdf version manager if not already installed.
+# Author: Alan Szmyt
+
 set -euo pipefail  # Exit on error, undefined variables, or failed pipes
 
-# Define versions and paths
 ASDF_VERSION="v0.16.4"  # Ensure this is the latest stable version
-ASDF_BIN="/usr/local/bin/asdf"
 
-# Detect OS and architecture
-OS="$(uname -s | tr '[:upper:]' '[:lower:]')"  # linux or darwin
-ARCH="$(uname -m)"
+detect_os_arch() {
+    OS="$(uname -s | tr '[:upper:]' '[:lower:]')"  # linux or darwin
+    ARCH="$(uname -m)"
 
-# Map architecture names for correct binary
-if [[ "$ARCH" == "x86_64" ]]; then
-    ARCH="amd64"
-elif [[ "$ARCH" == "aarch64" || "$ARCH" == "arm64" ]]; then
-    ARCH="arm64"
-else
-    echo "❌ Unsupported architecture: $ARCH"
-    exit 1
-fi
+    case "$ARCH" in
+        x86_64) ARCH="amd64" ;;
+        aarch64 | arm64) ARCH="arm64" ;;
+        *)
+            printf "❌ Unsupported architecture: %s\n" "$ARCH"
+            exit 1
+            ;;
+    esac
 
-# Construct the correct download URL
-ASDF_TARBALL="asdf-${ASDF_VERSION}-${OS}-${ARCH}.tar.gz"
-ASDF_URL="https://github.com/asdf-vm/asdf/releases/download/${ASDF_VERSION}/${ASDF_TARBALL}"
+    printf "🖥️ Detected OS: %s, Architecture: %s\n" "$OS" "$ARCH"
+}
 
-# Download and install
-echo "📥 Downloading asdf ${ASDF_VERSION} for ${OS}/${ARCH} from ${ASDF_URL}..."
-curl --fail --silent --show-error --location "$ASDF_URL" --output "/tmp/${ASDF_TARBALL}"
+install_asdf() {
+    if command -v asdf &>/dev/null; then
+        printf "✅ asdf is already installed: %s\n" "$(asdf --version)"
+        return
+    fi
 
-echo "📦 Extracting asdf..."
-tar -xzf "/tmp/${ASDF_TARBALL}" -C /tmp
+    local asdf_tarball="asdf-${ASDF_VERSION}-${OS}-${ARCH}.tar.gz"
+    local asdf_url="https://github.com/asdf-vm/asdf/releases/download/${ASDF_VERSION}/${asdf_tarball}"
 
-# Ensure extracted binary exists
-if [[ ! -f "/tmp/asdf" ]]; then
-    echo "❌ asdf binary not found in extracted files!"
-    exit 1
-fi
+    printf "📥 Downloading asdf %s for %s/%s...\n" "$ASDF_VERSION" "$OS" "$ARCH"
+    curl --fail --silent --show-error --location "$asdf_url" --output asdf.tar.gz
 
-# Move binary to /usr/local/bin
-echo "🚀 Installing asdf globally..."
-install -m 755 "/tmp/asdf" "$ASDF_BIN"
+    printf "📦 Extracting asdf...\n"
+    tar -xzf asdf.tar.gz
 
-# Clean up
-rm -f "/tmp/${ASDF_TARBALL}" "/tmp/asdf"
+    if [[ ! -f "asdf" ]]; then
+        printf "❌ asdf binary not found in extracted files!\n"
+        exit 1
+    fi
 
-# Verify installation
-if command -v asdf &>/dev/null; then
-    echo "✅ asdf installed successfully: $(asdf --version)"
-else
-    echo "❌ Failed to install asdf."
-    exit 1
-fi
+    printf "🚀 Installing asdf in /usr/local/bin/...\n"
+    chmod +x asdf
+    mv asdf /usr/local/bin/asdf
+
+    # Clean up
+    rm -f asdf.tar.gz
+
+    printf "✅ asdf installed successfully!\n"
+}
+
+verify_installation() {
+    if command -v asdf &>/dev/null; then
+        printf "✅ asdf is available: %s\n" "$(asdf --version)"
+    else
+        printf "❌ Failed to install asdf.\n"
+        exit 1
+    fi
+}
+
+main() {
+    trap 'printf "❌ An error occurred during execution.\n"' ERR
+    detect_os_arch
+    install_asdf
+    verify_installation
+}
+
+main "$@"
