@@ -4,10 +4,30 @@ services:
       context: ..
       dockerfile: .devcontainer/Dockerfile
     volumes:
-      - ..:/workspace
+      - ..:/workspace:cached
     # command: sleep infinity
     environment:
       - PULUMI_CONFIG_PASSPHRASE=
     ports:
       - "30080:30080"
       - "30081:30081"
+    networks:
+      - devnet
+
+  caddy:
+    build:
+      context: ../services/caddy
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+      - "8082:8082"
+      - "8083:80"
+      - "8084:443"
+    volumes:
+      - ../services/caddy/Caddyfile:/etc/caddy/Caddyfile
+    networks:
+      - devnet
+
+networks:
+  devnet:
+    driver: bridge
