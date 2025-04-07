@@ -1,6 +1,19 @@
 # Use a base image with common development tools (Ubuntu-based)
 FROM mcr.microsoft.com/devcontainers/base:ubuntu-22.04
 
+# Proxy Environment Variables
+# https://docs.docker.com/engine/reference/builder/#predefined-args
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+ARG NO_PROXY
+ARG FTP_PROXY
+ARG ALL_PROXY
+ARG http_proxy
+ARG https_proxy
+ARG no_proxy
+ARG ftp_proxy
+ARG all_proxy
+
 # Set non-interactive mode for package installations
 ENV DEBIAN_FRONTEND=noninteractive
 
