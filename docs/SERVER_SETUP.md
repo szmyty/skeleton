@@ -37,6 +37,12 @@ sudo chmod g+s /opt/{app-name}
 
 This allows any group member to edit the contents, and newly created files inherit the group.
 
+> ✨ After running `usermod`, either **log out and back in**, or run:
+
+```shell
+newgrp {app-name}
+```
+
 ---
 
 ## 🔐 3. Add a Global GitHub Deploy Key
