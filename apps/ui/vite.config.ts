@@ -2,9 +2,8 @@ import { defineConfig, loadEnv } from "vite";
 import { resolve } from "path";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import tsconfigPaths from "vite-tsconfig-paths";
 import fixReactVirtualized from "esbuild-plugin-react-virtualized";
-
-// Optional: Inject version from package.json
 import pkg from "./package.json";
 
 export default defineConfig(({ mode }) => {
@@ -13,7 +12,8 @@ export default defineConfig(({ mode }) => {
   return {
     define: {
       __PACKAGE_VERSION__: JSON.stringify(pkg.version),
-      "process.env": env // if needed for legacy compat
+      "process.env": env, // For legacy packages that rely on process.env.X
+      global: "globalThis" // Fix for deck.gl/loaders.gl compatibility
     },
     optimizeDeps: {
       esbuildOptions: {
@@ -25,7 +25,8 @@ export default defineConfig(({ mode }) => {
         jsxImportSource: "react",
         jsxRuntime: "automatic",
       }),
-      tailwindcss()
+      tailwindcss(),
+      tsconfigPaths()
     ],
     publicDir: "public",
     server: {
@@ -36,13 +37,6 @@ export default defineConfig(({ mode }) => {
       headers: {
         "Access-Control-Allow-Origin": "*",
       },
-    },
-    resolve: {
-      alias: {
-        "@app": resolve(__dirname, "src/app"),
-        "@components": resolve(__dirname, "src/components"),
-        "@hooks": resolve(__dirname, "src/hooks"),
-      }
-    },
+    }
   };
 });
