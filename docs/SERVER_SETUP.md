@@ -23,15 +23,23 @@ Create a group for all collaborators and assign permissions:
 
 ```shell
 sudo groupadd {app-name}
-sudo usermod -aG {app-name} <your-username>
+sudo usermod -aG {app-name} $USER
 sudo usermod -aG {app-name} <other-dev>
 ```
 
 Apply ownership and group-based permissions:
 
 ```shell
+# 👤 Change ownership of all files to your user and the shared group
 sudo chown -R $USER:{app-name} /opt/{app-name}
+
+# 🔐 Set directory permissions:
+# 7 (rwx) for user, 7 (rwx) for group, 5 (r-x) for others
+# This allows group members to read, write, and execute
 sudo chmod -R 775 /opt/{app-name}
+
+# 📦 Set the "setgid" bit on the directory:
+# Ensures all newly created files/folders inherit the group {app-name}
 sudo chmod g+s /opt/{app-name}
 ```
 
