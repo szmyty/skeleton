@@ -58,7 +58,7 @@ newgrp {app-name}
 ### Step 1: Generate the key
 
 ```shell
-ssh-keygen -t ed25519 -C "deploy@{app-name}" -f /opt/{app-name}/.ssh/deploy_key
+mkdir --parents /opt/{app-name}/.ssh && ssh-keygen -t ed25519 -C "deploy@{app-name}" -f /opt/{app-name}/.ssh/deploy_key
 ```
 
 Leave the passphrase empty.
